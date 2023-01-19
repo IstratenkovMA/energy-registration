@@ -28,7 +28,6 @@ class CSVParseServiceTest {
 
     CSVParseService csvParseService = new CSVParseService();
 
-
     @Test
     void parseFractionsFromFile() throws IOException, DataFormatException {
         URL url = Thread.currentThread().getContextClassLoader().getResource("testValidFractionsUpload.csv");

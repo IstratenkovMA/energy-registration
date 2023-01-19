@@ -3,6 +3,7 @@ package com.istratenkov.energyregistration.model.entity;
 import com.istratenkov.energyregistration.model.entity.enumeration.Month;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -20,7 +21,7 @@ import java.util.Objects;
 @NoArgsConstructor
 public class MeterMeasurement {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer value;
     private Month month;
