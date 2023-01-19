@@ -8,12 +8,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Objects;
 
 @Entity
 @Table(schema = "energy")
 @Setter
 @Getter
+@NoArgsConstructor
 public class MeterMeasurement {
     @Id
     @GeneratedValue
@@ -25,4 +29,23 @@ public class MeterMeasurement {
     @ManyToOne
     @JoinColumn(name="profile_id", nullable=false)
     private Profile profile;
+
+    public MeterMeasurement(Integer value, Month month, Integer year) {
+        this.value = value;
+        this.month = month;
+        this.year = year;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MeterMeasurement that = (MeterMeasurement) o;
+        return Objects.equals(id, that.id) && Objects.equals(value, that.value) && month == that.month && Objects.equals(year, that.year);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, value, month, year);
+    }
 }

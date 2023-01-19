@@ -33,6 +33,13 @@ public class Fraction {
     @JoinColumn(name = "profile_id", nullable = false)
     private Profile profile;
 
+    public Fraction(float value, Month month, Integer year, Profile profile) {
+        this.value = value;
+        this.month = month;
+        this.year = year;
+        this.profile = profile;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
