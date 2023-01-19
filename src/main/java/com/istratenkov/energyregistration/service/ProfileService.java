@@ -1,5 +1,6 @@
 package com.istratenkov.energyregistration.service;
 
+import com.istratenkov.energyregistration.exception.ProfileDataNotFoundInDBException;
 import com.istratenkov.energyregistration.model.entity.Fraction;
 import com.istratenkov.energyregistration.model.entity.MeterMeasurement;
 import com.istratenkov.energyregistration.model.entity.Profile;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,6 +27,11 @@ public class ProfileService {
     }
 
     @Transactional
+    public Profile getProfileByMeterId(String meterId) {
+        return profileRepository.findByMeterId(meterId);
+    }
+
+    @Transactional
     public List<Profile> enrichProfile(Map<Profile, List<MeterMeasurement>> parsedMeasurements) {
         List<String> profileNamesToEnrich = parsedMeasurements.keySet()
                 .stream().map(Profile::getName).collect(Collectors.toList());
@@ -38,15 +43,14 @@ public class ProfileService {
             Integer yearOfMeasurements = profileMeasurements.getValue().get(0).getYear();
             Profile parsedProfile = profileMeasurements.getKey();
             if(!namesProfilesFromDB.containsKey(parsedProfile.getName())) {
-                throw new RuntimeException(String.format("Data for %s profile is absent in DB!",
-                        parsedProfile.getName()));//todo it's better to create app exception for this
+                throw new ProfileDataNotFoundInDBException(parsedProfile.getName());
             }
             Profile profileFromDB = namesProfilesFromDB.get(parsedProfile.getName());
             profileFromDB.setMeterId(parsedProfile.getMeterId());
-            profileFromDB.setMeasurements(new HashSet<>(profileMeasurements.getValue()));
+            profileFromDB.setMeasurements(profileMeasurements.getValue());
             List<Fraction> fractionForTheSameYear = fractionRepository.
                     findAllByProfileIdAndYear(profileFromDB.getId(), yearOfMeasurements);
-            profileFromDB.setFractions(new HashSet<>(fractionForTheSameYear)); //todo check if we can refactor from set to list
+            profileFromDB.setFractions(fractionForTheSameYear);
             enrichedProfiles.add(profileFromDB);
         }
         return enrichedProfiles;

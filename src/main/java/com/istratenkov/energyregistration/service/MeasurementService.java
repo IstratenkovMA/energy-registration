@@ -28,8 +28,8 @@ public class MeasurementService {
         List<Profile> profiles = profileService.enrichProfile(parsedMeasurements);
         Set<Profile> invalidProfiles = new HashSet<>();
         for (Profile profile : profiles) {
-            Set<MeterMeasurement> measurements = profile.getMeasurements();
-            Set<Fraction> fractions = profile.getFractions();
+            List<MeterMeasurement> measurements = profile.getMeasurements();
+            List<Fraction> fractions = profile.getFractions();
             Map<Month, MeterMeasurement> monthMeasurement = measurements
                     .stream().collect(Collectors.toMap(MeterMeasurement::getMonth, e -> e));
             Map<Month, Fraction> monthFraction = fractions
@@ -77,5 +77,24 @@ public class MeasurementService {
     @Transactional
     public void saveAll(List<MeterMeasurement> measurements) {
         repository.saveAll(measurements);
+    }
+
+    @Transactional
+    public Integer getConsumptionForMeterByMonth(String meterId, String month, Integer year) {
+        Month requiredMonth = Month.valueOf(month);
+        Profile profile = profileService.getProfileByMeterId(meterId);
+        if(requiredMonth == Month.JAN) {
+            return repository.findAllByProfileIdAndYearAndMonthIn(profile.getId(),
+                    year, List.of(requiredMonth)).get(0).getValue();
+        } else {
+            Month previousMonth = MonthConverter.map.get(Month.valueOf(month).getNumber() - 1);
+            List<MeterMeasurement> twoMonthMeasurements = repository.findAllByProfileIdAndYearAndMonthIn(
+                    profile.getId(),
+                    year,
+                    List.of(previousMonth, requiredMonth));
+            MeterMeasurement first = twoMonthMeasurements.get(0);
+            MeterMeasurement second = twoMonthMeasurements.get(1);
+            return Math.abs(second.getValue() - first.getValue());
+        }
     }
 }

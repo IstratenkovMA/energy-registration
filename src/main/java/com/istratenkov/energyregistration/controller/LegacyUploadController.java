@@ -11,8 +11,10 @@ import com.istratenkov.energyregistration.service.MeasurementService;
 import com.istratenkov.energyregistration.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -53,5 +55,12 @@ public class LegacyUploadController {
                 .stream().flatMap(e -> e.getMeasurements().stream()).collect(Collectors.toList()));
         profileService.saveAll(validProfiles);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/consumption")
+    public ResponseEntity<Object> getConsumptionForMeter(@RequestParam("meterId") String meterId,
+                                                         @RequestParam("month") String month,
+                                                         @RequestParam("year") Integer year) {
+        return ResponseEntity.ok(measurementService.getConsumptionForMeterByMonth(meterId, month, year));
     }
 }

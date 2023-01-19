@@ -1,6 +1,5 @@
 package com.istratenkov.energyregistration.model.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -12,8 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 
 @Entity
@@ -28,9 +27,9 @@ public class Profile {
     private String name;
     private String meterId;
     @OneToMany(fetch = FetchType.LAZY, mappedBy="profile")
-    private Set<Fraction> fractions;
+    private List<Fraction> fractions;
     @OneToMany(fetch = FetchType.LAZY, mappedBy="profile")
-    private Set<MeterMeasurement> measurements;
+    private List<MeterMeasurement> measurements;
 
     @Override
     public boolean equals(Object o) {
