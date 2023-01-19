@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - preConditions:
+      - onFail: WARN
+      - dbms:
+          type: postgresql
+  #      - sqlCheck:
+  #          expectedResult: 0
+  #          sql: select count(*) from DATABASECHANGELOGLOCK where locked
+  - include:
+      file: db/migration/energy_changesets.xml

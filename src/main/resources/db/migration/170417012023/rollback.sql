@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS energy.meter;
+
+-- DROP TABLE IF EXISTS energy.metr;
+
+DROP SCHEMA IF EXISTS energy;

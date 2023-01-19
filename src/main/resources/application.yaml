@@ -1,0 +1,18 @@
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:postgresql://localhost:5432/etpa-energy
+    username: postgres
+    password: password
+    driverClassName: org.postgresql.Driver
+  liquibase:
+    change-log: classpath:/db/migration/db.changelog-master.yaml
+  sql:
+    init:
+      platform: postgres
+server:
+  port: 8080
