@@ -6,6 +6,10 @@ import lombok.RequiredArgsConstructor;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+
+/**
+ * Business exception. If consumption validation isn't passed by profiles error is raised.
+ */
 @RequiredArgsConstructor
 public class ConsumptionCheckSumValidationException extends RuntimeException {
     private static final String ERROR_MESSAGE = "For given profiles: [%s] Consumption for whole year is greater then 100%";

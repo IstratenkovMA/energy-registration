@@ -7,6 +7,9 @@ import lombok.Getter;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Used to pass information about profiles after validation steps.
+ */
 @AllArgsConstructor
 @Getter
 public class ValidationResultDto {

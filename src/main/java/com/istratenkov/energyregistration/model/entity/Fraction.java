@@ -17,6 +17,16 @@ import lombok.Setter;
 
 import java.util.Objects;
 
+/**
+ * Entity of fraction. Represents fraction of graph.
+ * Graph is show how consumption divided for one year for given profile.
+ * Value of fraction is a float value it's represents percentage that being consumed by profile in one month.
+ * All values for 12 month fractions in sum gives "1",
+ * that represents that total consumed is 100%(as it should be).
+ *
+ * For further usage can be added OneToOne connection with measurement entity.
+ * To simplify some calculations if it's needed in future.
+ */
 @Entity
 @Table(schema = "energy")
 @NoArgsConstructor
@@ -32,7 +42,7 @@ public class Fraction {
     private Month month;
     private Integer year;
 
-    @ManyToOne/*(cascade = CascadeType.ALL)*/
+    @ManyToOne
     @JoinColumn(name = "profile_id", nullable = false)
     private Profile profile;
 
@@ -42,8 +52,6 @@ public class Fraction {
         this.year = year;
         this.profile = profile;
     }
-
-
 
     @Override
     public boolean equals(Object o) {

@@ -22,12 +22,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.DataFormatException;
 
+/**
+ * Class that provide csv file paring functionality.
+ * OpenCSV library used for file parsing.
+ */
 @Slf4j
 @Service
 public class CSVParseService {
 
+    /**
+     * Parse csv of fraction file. (examples of format can be found in test/resources)
+     * @param file multipart file with data about fractions of profiles.
+     * @return Map of profile and it's list parsed fractions.
+     * @throws DataFormatException in case of file has incorrect format.
+     */
     public Map<Profile, List<Fraction>> parseFractionsFromFile(MultipartFile file)
             throws DataFormatException {
+        // todo add logging
         Map<Profile, List<Fraction>> parsedFractions = new HashMap<>();
         int year = Year.now().getValue();
         try (InputStream is = file.getInputStream();
@@ -52,11 +63,20 @@ public class CSVParseService {
             log.error(e.getMessage());
             throw new DataFormatException("file format is incorrect");
         }
+        // todo add logging
         return parsedFractions;
     }
 
+    /**
+     * Parse csv file with information about measurements of a given meter.
+     * (examples of format can be found in test/resources)
+     * @param file file with information about profile with meterId and it's measurements for 12 months.
+     * @return Map of profile and it's list parsed measurements.
+     * @throws DataFormatException in case of file has incorrect format.
+     */
     public Map<Profile, List<MeterMeasurement>> parseMeterMeasurementsFromFile(MultipartFile file)
             throws DataFormatException {
+        // todo add logging
         Map<Profile, List<MeterMeasurement>> parsedMeasurements = new HashMap<>();
         int year = Year.now().getValue();
         try (InputStream is = file.getInputStream();
@@ -86,6 +106,7 @@ public class CSVParseService {
             log.error(e.getMessage());
             throw new DataFormatException("file format is incorrect");
         }
+        // todo add logging
         return parsedMeasurements;
     }
 }

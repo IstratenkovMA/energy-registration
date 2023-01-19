@@ -14,7 +14,10 @@ import lombok.Setter;
 import java.util.List;
 import java.util.Objects;
 
-
+/**
+ * Entity that can be represented by analogy with user of electricity or gas.
+ * Also store meterId, for that task we assume that one profile has only one meter.
+ */
 @Entity
 @Table(schema = "energy")
 @NoArgsConstructor

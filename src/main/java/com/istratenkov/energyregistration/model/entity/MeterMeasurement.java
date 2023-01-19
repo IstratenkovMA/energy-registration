@@ -15,6 +15,12 @@ import lombok.Setter;
 
 import java.util.Objects;
 
+/**
+ * Represents data for specific meter for one year. For that task we assume that one profile only have one meter.
+ * By using this entity can be calculated consumption for a given period. For example OCT value minus FEB value
+ * will give a consumption for the period from FEB to OCT.
+ * By the start of the year every meter value reset to 0.
+ */
 @Entity
 @Table(schema = "energy")
 @Setter

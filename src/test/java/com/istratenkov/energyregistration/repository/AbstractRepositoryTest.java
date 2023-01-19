@@ -1,17 +1,21 @@
 package com.istratenkov.energyregistration.repository;
 
-import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.utility.DockerImageName;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+/**
+ * Testcontainers infrastructural class. Need to start postgres container
+ * in integration tests and stop it when tests are done.
+ * Also has a functionality to execute natives query to generate test data if needed.
+ */
 public abstract class AbstractRepositoryTest {
 
     protected static PostgreSQLContainer sqlContainer;
