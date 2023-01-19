@@ -32,7 +32,7 @@ public class Fraction {
     private Month month;
     private Integer year;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne/*(cascade = CascadeType.ALL)*/
     @JoinColumn(name = "profile_id", nullable = false)
     private Profile profile;
 

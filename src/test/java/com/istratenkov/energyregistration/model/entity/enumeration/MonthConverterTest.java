@@ -48,7 +48,7 @@ class MonthConverterTest {
         assertEquals(monthNum, converted);
     }
 
-    @Test
+    @ParameterizedTest
     @EnumSource(Month.class)
     void convertToEntityAttribute(Month month) {
         Month converted = monthConverter.convertToEntityAttribute(month.getNumber());

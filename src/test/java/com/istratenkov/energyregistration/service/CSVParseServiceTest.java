@@ -4,6 +4,7 @@ import com.istratenkov.energyregistration.model.entity.Fraction;
 import com.istratenkov.energyregistration.model.entity.MeterMeasurement;
 import com.istratenkov.energyregistration.model.entity.Profile;
 import com.istratenkov.energyregistration.model.entity.enumeration.Month;
+import com.istratenkov.energyregistration.utils.TestUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -42,20 +43,7 @@ class CSVParseServiceTest {
         Profile parsedProfile = parsedProfileFractions.keySet().iterator().next();
         assertEquals(profile, parsedProfile);
         List<Fraction> parsedFractions = parsedProfileFractions.get(parsedProfile);
-        List<Fraction> expectedFractions = new ArrayList<>();
-        Integer year = 2023;
-        expectedFractions.add(new Fraction(0.2f,  Month.JAN, year, profile));
-        expectedFractions.add(new Fraction(0.18f, Month.FEB, year, profile));
-        expectedFractions.add(new Fraction(0.05f, Month.JUL, year, profile));
-        expectedFractions.add(new Fraction(0.21f, Month.MAR, year, profile));
-        expectedFractions.add(new Fraction(0.04f, Month.APR, year, profile));
-        expectedFractions.add(new Fraction(0.04f, Month.JUN, year, profile));
-        expectedFractions.add(new Fraction(0.04f, Month.AUG, year, profile));
-        expectedFractions.add(new Fraction(0.05f, Month.SEP, year, profile));
-        expectedFractions.add(new Fraction(0.01f, Month.OCT, year, profile));
-        expectedFractions.add(new Fraction(0.08f, Month.NOV, year, profile));
-        expectedFractions.add(new Fraction(0.05f, Month.DEC, year, profile));
-        expectedFractions.add(new Fraction(0.05f, Month.MAY, year, profile));
+        List<Fraction> expectedFractions = TestUtils.generateFractionsTestData(profile);
         assertEquals(expectedFractions, parsedFractions);
     }
 
@@ -74,20 +62,7 @@ class CSVParseServiceTest {
         Profile parsedProfile = parsedProfileFractions.keySet().iterator().next();
         assertEquals(profile, parsedProfile);
         List<MeterMeasurement> parsedFractions = parsedProfileFractions.get(parsedProfile);
-        List<MeterMeasurement> expectedFractions = new ArrayList<>();
-        Integer year = 2023;
-        expectedFractions.add(new MeterMeasurement(52, Month.JAN, year));
-        expectedFractions.add(new MeterMeasurement(101, Month.FEB, year));
-        expectedFractions.add(new MeterMeasurement(201, Month.JUL, year));
-        expectedFractions.add(new MeterMeasurement(155, Month.MAR, year));
-        expectedFractions.add(new MeterMeasurement(165, Month.APR, year));
-        expectedFractions.add(new MeterMeasurement(188, Month.JUN, year));
-        expectedFractions.add(new MeterMeasurement(211, Month.AUG, year));
-        expectedFractions.add(new MeterMeasurement(224, Month.SEP, year));
-        expectedFractions.add(new MeterMeasurement(226, Month.OCT, year));
-        expectedFractions.add(new MeterMeasurement(247, Month.NOV, year));
-        expectedFractions.add(new MeterMeasurement(260, Month.DEC, year));
-        expectedFractions.add(new MeterMeasurement(178, Month.MAY, year));
-        assertEquals(expectedFractions, parsedFractions);
+        List<MeterMeasurement> expectedMeasurements = TestUtils.generateMeasurementsTestData();
+        assertEquals(expectedMeasurements, parsedFractions);
     }
 }

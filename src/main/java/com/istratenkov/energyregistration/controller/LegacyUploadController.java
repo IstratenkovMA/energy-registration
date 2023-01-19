@@ -9,6 +9,7 @@ import com.istratenkov.energyregistration.service.CSVParseService;
 import com.istratenkov.energyregistration.service.FractionService;
 import com.istratenkov.energyregistration.service.MeasurementService;
 import com.istratenkov.energyregistration.service.ProfileService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,7 @@ public class LegacyUploadController {
     private final MeasurementService measurementService;
     private final ProfileService profileService;
 
+    @Operation(summary = "Upload fractions")
     @PostMapping("/fractions")
     public ResponseEntity<Object> uploadFractions(@RequestBody MultipartFile file) throws DataFormatException {
         Map<Profile, List<Fraction>> profileFractionsParsed = csvParseService.parseFractionsFromFile(file);

@@ -26,3 +26,8 @@ The following guides illustrate how to use some features concretely:
 
 
 todo fixme create documentation here
+
+это новые аннотации для доков, я там попробовал добавить описание - работает
+https://springdoc.org/v2/#migrating-from-springfox
+API Documentation
+http://localhost:8080/swagger-ui/index.html#
