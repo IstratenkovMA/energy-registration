@@ -75,7 +75,7 @@ class FractionServiceTest {
         ArgumentCaptor<Set<Profile>> profilesCaptor = ArgumentCaptor.forClass(Set.class);
         when(profileRepository.saveAll(profilesCaptor.capture())).thenReturn(List.of(new Profile()));
 
-        fractionService.saveFractions(generateValidTestData());
+        fractionService.saveFractionsWithProfile(generateValidTestData());
 
         verify(profileRepository).findAllByNameIn(anyList());
         verify(profileRepository).saveAll(anySet());
@@ -92,7 +92,7 @@ class FractionServiceTest {
         ArgumentCaptor<Set<Profile>> profilesCaptor = ArgumentCaptor.forClass(Set.class);
         when(profileRepository.saveAll(profilesCaptor.capture())).thenReturn(List.of(new Profile()));
 
-        fractionService.saveFractions(generateValidTestData());
+        fractionService.saveFractionsWithProfile(generateValidTestData());
 
         verify(profileRepository).findAllByNameIn(anyList());
         verify(profileRepository).saveAll(anySet());

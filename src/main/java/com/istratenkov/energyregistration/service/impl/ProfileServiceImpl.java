@@ -1,6 +1,6 @@
 package com.istratenkov.energyregistration.service.impl;
 
-import com.istratenkov.energyregistration.exception.ProfileDataNotFoundInDBException;
+import com.istratenkov.energyregistration.model.dto.EnrichedProfilesDto;
 import com.istratenkov.energyregistration.model.entity.Fraction;
 import com.istratenkov.energyregistration.model.entity.MeterMeasurement;
 import com.istratenkov.energyregistration.model.entity.Profile;
@@ -60,27 +60,54 @@ public class ProfileServiceImpl implements ProfileService {
      */
     @Override
     @Transactional
-    public List<Profile> enrichProfile(Map<Profile, List<MeterMeasurement>> parsedMeasurements) {
-        List<String> profileNamesToEnrich = parsedMeasurements.keySet()
-                .stream().map(Profile::getName).collect(Collectors.toList());
+    public EnrichedProfilesDto enrichParsedProfile(Map<Profile, List<MeterMeasurement>> parsedMeasurements) {
+        List<String> profileNamesToEnrich = getListOfProfileNames(parsedMeasurements);
         List<Profile> profilesFromDB = profileRepository.findAllByNameIn(profileNamesToEnrich);
-        Map<String, Profile> namesProfilesFromDB = profilesFromDB
-                .stream().collect(Collectors.toMap(Profile::getName, e -> e));
+        Map<String, Profile> namesProfilesFromDB = getNameProfileMap(profilesFromDB);
+
         List<Profile> enrichedProfiles = new ArrayList<>();
+        List<Profile> profilesFailedToEnrich = new ArrayList<>();
         for (Map.Entry<Profile, List<MeterMeasurement>> profileMeasurements : parsedMeasurements.entrySet()) {
-            Integer yearOfMeasurements = profileMeasurements.getValue().get(0).getYear();
-            Profile parsedProfile = profileMeasurements.getKey();
-            if (!namesProfilesFromDB.containsKey(parsedProfile.getName())) {
-                throw new ProfileDataNotFoundInDBException(parsedProfile.getName());
+            boolean profileEnriched = tryToEnrichProfile(namesProfilesFromDB, enrichedProfiles, profileMeasurements);
+            if(!profileEnriched) {
+                profilesFailedToEnrich.add(profileMeasurements.getKey());
             }
+        }
+        return new EnrichedProfilesDto(enrichedProfiles, profilesFailedToEnrich);
+    }
+
+    private boolean tryToEnrichProfile(Map<String, Profile> namesProfilesFromDB,
+                                    List<Profile> enrichedProfiles,
+                                    Map.Entry<Profile, List<MeterMeasurement>> profileMeasurements) {
+        Integer yearOfMeasurements = profileMeasurements.getValue().get(0).getYear();
+        Profile parsedProfile = profileMeasurements.getKey();
+        //add to enriched profiles only if it exists in db
+        if (isProfilePresentedInDB(namesProfilesFromDB, parsedProfile)) {
             Profile profileFromDB = namesProfilesFromDB.get(parsedProfile.getName());
             profileFromDB.setMeterId(parsedProfile.getMeterId());
             profileFromDB.setMeasurements(profileMeasurements.getValue());
-            List<Fraction> fractionForTheSameYear = fractionRepository.
+            List<Fraction> fractions = fractionRepository.
                     findAllByProfileIdAndYear(profileFromDB.getId(), yearOfMeasurements);
-            profileFromDB.setFractions(fractionForTheSameYear);
+            if(fractions.isEmpty()) return false; //it means that profile is invalid and validation cannot be performed
+            profileFromDB.setFractions(fractions);
             enrichedProfiles.add(profileFromDB);
+            return true;
+        } else {
+            return false;
         }
-        return enrichedProfiles;
+    }
+
+    private List<String> getListOfProfileNames(Map<Profile, List<MeterMeasurement>> parsedMeasurements) {
+        return parsedMeasurements.keySet().stream().map(Profile::getName).collect(Collectors.toList());
+    }
+
+    //verify profiles founded in db, is it contains profile from parsed file.
+    private boolean isProfilePresentedInDB(Map<String, Profile> namesProfilesFromDB, Profile parsedProfile) {
+        return namesProfilesFromDB.containsKey(parsedProfile.getName());
+    }
+
+    //to search for element faster than O(n) by profile name
+    private Map<String, Profile> getNameProfileMap(List<Profile> profilesFromDB) {
+        return profilesFromDB.stream().collect(Collectors.toMap(Profile::getName, e -> e));
     }
 }

@@ -73,7 +73,7 @@ class ProfileServiceTest {
         when(fractionRepository.findAllByProfileIdAndYear(anyLong(), anyInt()))
                 .thenReturn(TestUtils.generateFractionsTestData(profile1));
 
-        List<Profile> result = profileService.enrichProfile(parsedMeasurements);
+        List<Profile> result = profileService.enrichParsedProfile(parsedMeasurements);
 
         assertNotNull(result);
         assertEquals(3, result.size());
@@ -102,6 +102,6 @@ class ProfileServiceTest {
         when(profileRepository.findAllByNameIn(anyList())).thenReturn(List.of(profile));
 
         assertThrowsExactly(ProfileDataNotFoundInDBException.class,
-                () -> profileService.enrichProfile(parsedMeasurements));
+                () -> profileService.enrichParsedProfile(parsedMeasurements));
     }
 }

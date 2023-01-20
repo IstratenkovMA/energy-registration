@@ -1,6 +1,5 @@
 package com.istratenkov.energyregistration.service.impl;
 
-import com.istratenkov.energyregistration.exception.ConsumptionCheckSumValidationException;
 import com.istratenkov.energyregistration.model.dto.ValidationResultDto;
 import com.istratenkov.energyregistration.model.entity.Fraction;
 import com.istratenkov.energyregistration.model.entity.MeterMeasurement;
@@ -28,11 +27,7 @@ public class UploadServiceImpl implements UploadService {
     public ValidationResultDto uploadFractions(MultipartFile file) throws DataFormatException {
         Map<Profile, List<Fraction>> profileFractionsParsed = csvParseService.parseFractionsFromFile(file);
         ValidationResultDto validationResultDto = fractionService.validateParsedFractions(profileFractionsParsed);
-        Set<Profile> invalidProfiles = validationResultDto.getInvalidProfiles();
-        if (!invalidProfiles.isEmpty()) {
-            throw new ConsumptionCheckSumValidationException(invalidProfiles);
-        }
-        fractionService.saveFractions(profileFractionsParsed);
+        fractionService.saveFractionsWithProfile(validationResultDto.getValidProfiles());
         return validationResultDto;
     }
 

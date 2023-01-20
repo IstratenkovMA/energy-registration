@@ -22,6 +22,7 @@ import java.util.zip.DataFormatException;
 
 /**
  * Legacy controller to support old api with csv file uploading.
+ * This controller only insert or updates data in database, following CQRS principles.
  * Controller also connected to swagger and can be accessed through
  * your application {host:port}/swagger-ui/index.html#
  */

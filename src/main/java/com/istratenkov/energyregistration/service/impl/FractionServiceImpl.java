@@ -46,6 +46,7 @@ public class FractionServiceImpl implements FractionService {
         for (Map.Entry<Profile, List<Fraction>> entry : parsedFractions.entrySet()) {
             Profile profile = entry.getKey();
             List<Fraction> fractions = entry.getValue();
+            profile.setFractions(fractions);
             DoubleSummaryStatistics collect = fractions
                     .stream()
                     .map(Fraction::getValue)
@@ -66,33 +67,33 @@ public class FractionServiceImpl implements FractionService {
     /**
      * Save information about fractions. Previously try to check
      * if profile for this specific fraction already been presented in db.
+     * Decides which profile need to be set as relation for fraction, from db or from parsed file.
      *
-     * @param parsedFractions map of valid and parsed profile vs list of fractions form csv file to be validated.
+     * @param validProfilesForSave map of valid and parsed profile vs list of fractions form csv file to be validated.
      */
     @Transactional
-    public void saveFractions(Map<Profile, List<Fraction>> parsedFractions) {
+    public void saveFractionsWithProfile(List<Profile> validProfilesForSave) {
         log.info("[saveFractions] Begin saving fractions data for profiles: {}",
-                getProfileNamesToString(parsedFractions.keySet().stream()));
+                getProfileNamesToString(validProfilesForSave.stream()));
         List<Fraction> fractions = new ArrayList<>();
-        Set<Profile> parsedProfiles = new HashSet<>(parsedFractions.keySet());
-        List<Profile> existingProfilesInDB = profileRepository.findAllByNameIn(parsedProfiles
-                .stream().map(Profile::getName).collect(Collectors.toList()));
-        existingProfilesInDB.forEach(parsedProfiles::remove);
+        Set<Profile> parsedProfiles = new HashSet<>(validProfilesForSave);
+        List<Profile> existingProfilesInDB = profileRepository
+                .findAllByNameIn(getListNamesFromProfileList(parsedProfiles));
         Map<String, Profile> nameProfileFromDb = transformListToMapNameProfile(existingProfilesInDB);
-        for (Map.Entry<Profile, List<Fraction>> entry : parsedFractions.entrySet()) {
-            Profile profile;
-            if (!parsedProfiles.contains(entry.getKey())) {
-                profile = nameProfileFromDb.get(entry.getKey().getName());
-            } else {
-                profile = entry.getKey();
-            }
-            entry.getValue().forEach(e -> e.setProfile(profile));
-            fractions.addAll(entry.getValue());
+        for (Profile profile : validProfilesForSave) {
+            Profile profileToUpdate = nameProfileFromDb.getOrDefault(profile.getName(), profile);
+            List<Fraction> fractionsToSave = profile.getFractions();
+            fractionsToSave.forEach(e -> e.setProfile(profileToUpdate));
+            fractions.addAll(fractionsToSave);
         }
         profileRepository.saveAll(parsedProfiles);
         fractionRepository.saveAll(fractions);
         log.info("[saveFractions] All data saved for profiles: {}",
-                getProfileNamesToString(parsedFractions.keySet().stream()));
+                getProfileNamesToString(validProfilesForSave.stream()));
+    }
+
+    private List<String> getListNamesFromProfileList(Set<Profile> parsedProfiles) {
+        return parsedProfiles.stream().map(Profile::getName).collect(Collectors.toList());
     }
 
     private Map<String, Profile> transformListToMapNameProfile(List<Profile> existingProfilesInDB) {

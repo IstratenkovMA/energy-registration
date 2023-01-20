@@ -47,14 +47,14 @@ class MeasurementServiceTest {
         profile.setId(1L);
         List<Profile> profiles = new ArrayList<>();
         profiles.add(profile);
-        when(profileService.enrichProfile(map)).thenReturn(profiles);
+        when(profileService.enrichParsedProfile(map)).thenReturn(profiles);
 
         ValidationResultDto result = measurementService.validateParsedMeasurements(map);
 
         assertNotNull(result);
         assertEquals(1, result.getValidProfiles().size());
         assertEquals(0, result.getInvalidProfiles().size());
-        verify(profileService).enrichProfile(map);
+        verify(profileService).enrichParsedProfile(map);
     }
 
     @Test
@@ -68,14 +68,14 @@ class MeasurementServiceTest {
         profile.setId(1L);
         List<Profile> profiles = new ArrayList<>();
         profiles.add(profile);
-        when(profileService.enrichProfile(map)).thenReturn(profiles);
+        when(profileService.enrichParsedProfile(map)).thenReturn(profiles);
 
         ValidationResultDto result = measurementService.validateParsedMeasurements(map);
 
         assertNotNull(result);
         assertEquals(0, result.getValidProfiles().size());
         assertEquals(1, result.getInvalidProfiles().size());
-        verify(profileService).enrichProfile(map);
+        verify(profileService).enrichParsedProfile(map);
     }
 
     @Test
@@ -89,14 +89,14 @@ class MeasurementServiceTest {
         profile.setId(1L);
         List<Profile> profiles = new ArrayList<>();
         profiles.add(profile);
-        when(profileService.enrichProfile(map)).thenReturn(profiles);
+        when(profileService.enrichParsedProfile(map)).thenReturn(profiles);
 
         ValidationResultDto result = measurementService.validateParsedMeasurements(map);
 
         assertNotNull(result);
         assertEquals(0, result.getValidProfiles().size());
         assertEquals(1, result.getInvalidProfiles().size());
-        verify(profileService).enrichProfile(map);
+        verify(profileService).enrichParsedProfile(map);
     }
 
     @Test
@@ -110,14 +110,14 @@ class MeasurementServiceTest {
         profile.setId(1L);
         List<Profile> profiles = new ArrayList<>();
         profiles.add(profile);
-        when(profileService.enrichProfile(map)).thenReturn(profiles);
+        when(profileService.enrichParsedProfile(map)).thenReturn(profiles);
 
         ValidationResultDto result = measurementService.validateParsedMeasurements(map);
 
         assertNotNull(result);
         assertEquals(0, result.getValidProfiles().size());
         assertEquals(1, result.getInvalidProfiles().size());
-        verify(profileService).enrichProfile(map);
+        verify(profileService).enrichParsedProfile(map);
     }
 
 

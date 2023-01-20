@@ -1,5 +1,6 @@
 package com.istratenkov.energyregistration.service.impl;
 
+import com.istratenkov.energyregistration.model.dto.EnrichedProfilesDto;
 import com.istratenkov.energyregistration.model.dto.ValidationResultDto;
 import com.istratenkov.energyregistration.model.entity.Fraction;
 import com.istratenkov.energyregistration.model.entity.MeterMeasurement;
@@ -43,8 +44,9 @@ public class MeasurementServiceImpl implements MeasurementService {
      */
     public ValidationResultDto validateParsedMeasurements(Map<Profile, List<MeterMeasurement>> parsedMeasurements) {
         log.trace("[validateParsedFractions] Profiles: {}", parsedMeasurements.keySet());
-        List<Profile> profiles = profileService.enrichProfile(parsedMeasurements);
-        Set<Profile> invalidProfiles = new HashSet<>();
+        EnrichedProfilesDto enrichmentDto = profileService.enrichParsedProfile(parsedMeasurements);
+        Set<Profile> invalidProfiles = new HashSet<>(enrichmentDto.getProfilesFailedToEnrich());
+        List<Profile> profiles = enrichmentDto.getEnrichedProfiles();
         for (Profile profile : profiles) {
             List<MeterMeasurement> measurements = profile.getMeasurements();
             List<Fraction> fractions = profile.getFractions();
