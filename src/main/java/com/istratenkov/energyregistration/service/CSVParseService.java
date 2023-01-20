@@ -11,5 +11,6 @@ import java.util.zip.DataFormatException;
 
 public interface CSVParseService {
     Map<Profile, List<Fraction>> parseFractionsFromFile(MultipartFile file) throws DataFormatException;
+
     Map<Profile, List<MeterMeasurement>> parseMeterMeasurementsFromFile(MultipartFile file) throws DataFormatException;
 }

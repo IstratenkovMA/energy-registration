@@ -1,7 +1,6 @@
 package com.istratenkov.energyregistration.model.entity;
 
 import com.istratenkov.energyregistration.model.entity.enumeration.Month;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +22,7 @@ import java.util.Objects;
  * Value of fraction is a float value it's represents percentage that being consumed by profile in one month.
  * All values for 12 month fractions in sum gives "1",
  * that represents that total consumed is 100%(as it should be).
- *
+ * <p>
  * For further usage can be added OneToOne connection with measurement entity.
  * To simplify some calculations if it's needed in future.
  */

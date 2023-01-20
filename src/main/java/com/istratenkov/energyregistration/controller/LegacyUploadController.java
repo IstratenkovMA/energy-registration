@@ -54,7 +54,7 @@ public class LegacyUploadController {
             throws DataFormatException {
         ValidationResultDto validationResultDto = uploadService.uploadFractions(file);
         Set<Profile> invalidProfiles = validationResultDto.getInvalidProfiles();
-        if(invalidProfiles.isEmpty()) {
+        if (invalidProfiles.isEmpty()) {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.ok(buildResponseForDataLoading(invalidProfiles));

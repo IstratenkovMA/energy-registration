@@ -5,7 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MonthConverterTest {
 
@@ -41,7 +41,8 @@ class MonthConverterTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}) // all month numbers
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
+        // all month numbers
     void convertToDatabaseColumn(int monthNum) {
         Month month = MonthConverter.map.get(monthNum);
         Integer converted = monthConverter.convertToDatabaseColumn(month);

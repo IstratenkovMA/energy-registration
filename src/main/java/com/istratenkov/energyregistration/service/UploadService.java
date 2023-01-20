@@ -7,5 +7,6 @@ import java.util.zip.DataFormatException;
 
 public interface UploadService {
     ValidationResultDto uploadFractions(MultipartFile file) throws DataFormatException;
+
     ValidationResultDto uploadMeasurements(MultipartFile file) throws DataFormatException;
 }

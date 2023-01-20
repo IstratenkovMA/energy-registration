@@ -36,7 +36,7 @@ public class MeterMeasurement {
     private Integer year;
 
     @ManyToOne
-    @JoinColumn(name="profile_id", nullable=false)
+    @JoinColumn(name = "profile_id", nullable = false)
     private Profile profile;
 
     public MeterMeasurement(Integer value, Month month, Integer year) {

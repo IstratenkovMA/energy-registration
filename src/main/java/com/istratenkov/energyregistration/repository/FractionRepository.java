@@ -14,8 +14,9 @@ import java.util.List;
 public interface FractionRepository extends CrudRepository<Fraction, Long> {
     /**
      * Finds all fractions for given profile and specific year.
+     *
      * @param profileId profileId stored in database.
-     * @param year year for fraction search in database.
+     * @param year      year for fraction search in database.
      * @return all fractions that matched from db or empty collection.
      */
     List<Fraction> findAllByProfileIdAndYear(Long profileId, Integer year);

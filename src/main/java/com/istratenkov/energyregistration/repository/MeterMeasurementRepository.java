@@ -16,17 +16,19 @@ public interface MeterMeasurementRepository extends CrudRepository<MeterMeasurem
 
     /**
      * Finds all measurements for given profile and specific year, in given months.
+     *
      * @param profileId profileId stored in database.
-     * @param year year for measurement search in database.
-     * @param months list of month that needed the information.
+     * @param year      year for measurement search in database.
+     * @param months    list of month that needed the information.
      * @return all measurements from db that matched or empty collection.
      */
     List<MeterMeasurement> findAllByProfileIdAndYearAndMonthIn(Long profileId, Integer year, List<Month> months);
 
     /**
      * Finds all measurements for given profile and specific year.
+     *
      * @param profileId profileId stored in database.
-     * @param year year for measurement search in database.
+     * @param year      year for measurement search in database.
      * @return all measurements from db that matched or empty collection.
      */
     List<MeterMeasurement> findAllByProfileIdAndYear(Long profileId, Integer year);

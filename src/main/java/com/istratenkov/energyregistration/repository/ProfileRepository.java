@@ -16,6 +16,7 @@ public interface ProfileRepository extends CrudRepository<Profile, Long> {
 
     /**
      * Search profiles in db by names.
+     *
      * @param names is collection of names to use them for profile search.
      * @return all profiles from db that matched or empty collection.
      */
@@ -23,6 +24,7 @@ public interface ProfileRepository extends CrudRepository<Profile, Long> {
 
     /**
      * Search for profile in db by meterId.
+     *
      * @param meterId id of meter that is used by specific profile.
      * @return profile from db that matched or null.
      */

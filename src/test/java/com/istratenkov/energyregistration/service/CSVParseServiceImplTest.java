@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.DataFormatException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class CSVParseServiceImplTest {
@@ -30,7 +30,7 @@ class CSVParseServiceImplTest {
         URL url = Thread.currentThread().getContextClassLoader().getResource("testValidFractionsUpload.csv");
         File file = new File(url.getPath());
         InputStream inputStream = new FileInputStream(file);
-        MockMultipartFile mockMultipartFile =  new MockMultipartFile(
+        MockMultipartFile mockMultipartFile = new MockMultipartFile(
                 "testValidFractionsUpload.csv", inputStream);
         Map<Profile, List<Fraction>> parsedProfileFractions = csvParseService.parseFractionsFromFile(mockMultipartFile);
 
@@ -48,7 +48,7 @@ class CSVParseServiceImplTest {
         URL url = Thread.currentThread().getContextClassLoader().getResource("testValidMeasurementsUpload.csv");
         File file = new File(url.getPath());
         InputStream inputStream = new FileInputStream(file);
-        MockMultipartFile mockMultipartFile =  new MockMultipartFile(
+        MockMultipartFile mockMultipartFile = new MockMultipartFile(
                 "testValidFractionsUpload.csv", inputStream);
         Map<Profile, List<MeterMeasurement>> parsedProfileFractions = csvParseService.parseMeterMeasurementsFromFile(mockMultipartFile);
 

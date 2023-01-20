@@ -36,6 +36,7 @@ public class MeasurementServiceImpl implements MeasurementService {
      * Validate data of measurements that next month data not lower than in previous.
      * Validate consumption of every given month with tolerance of 25% to match previously sent fractions
      * for that profile.
+     *
      * @param parsedMeasurements map of parsed profile and list of measurements form csv file to be validated.
      * @return ValidationResultDto with failed and succeeded lists of profiles.
      */
@@ -50,7 +51,7 @@ public class MeasurementServiceImpl implements MeasurementService {
                     .stream().collect(Collectors.toMap(MeterMeasurement::getMonth, e -> e));
             Map<Month, Fraction> monthFraction = fractions
                     .stream().collect(Collectors.toMap(Fraction::getMonth, e -> e));
-            if(!validateIncrementationOfMeasurements(monthMeasurement)
+            if (!validateIncrementationOfMeasurements(monthMeasurement)
                     || !validateConsumption(monthMeasurement, monthFraction)) {
                 invalidProfiles.add(profile);
             }
@@ -64,6 +65,7 @@ public class MeasurementServiceImpl implements MeasurementService {
 
     /**
      * Transactional method. Save all measurements to db.
+     *
      * @param measurements to be saved.
      */
     @Transactional
@@ -75,17 +77,18 @@ public class MeasurementServiceImpl implements MeasurementService {
      * Transactional method.
      * Read measurements measurements from database to calculate consumption for specified month.
      * This method functionality can easily be expanded to check range of month, not only one month.
+     *
      * @param meterId meterId for which is consumption need to be calculated.
-     * @param month name of the month allowed values can be found in
-     *             com.istratenkov.energyregistration.model.entity.enumeration.Month
-     * @param year year for which data is needed.
+     * @param month   name of the month allowed values can be found in
+     *                com.istratenkov.energyregistration.model.entity.enumeration.Month
+     * @param year    year for which data is needed.
      * @return Integer representing consumption for given month.
      */
     @Transactional
     public Integer getConsumptionForMeterByMonth(String meterId, String month, Integer year) {
         Month requiredMonth = Month.valueOf(month);
         Profile profile = profileService.getProfileByMeterId(meterId);
-        if(requiredMonth == Month.JAN) {
+        if (requiredMonth == Month.JAN) {
             return repository.findAllByProfileIdAndYearAndMonthIn(profile.getId(),
                     year, List.of(requiredMonth)).get(0).getValue();
         } else {
@@ -104,7 +107,7 @@ public class MeasurementServiceImpl implements MeasurementService {
         int previousValue = 0;
         for (int i = 1; i <= COUNT_OF_MONTH; i++) {
             MeterMeasurement measurement = monthMeasurement.get(MonthConverter.map.get(i));
-            if(previousValue > measurement.getValue()) {
+            if (previousValue > measurement.getValue()) {
                 return false;
             }
             previousValue = measurement.getValue();
@@ -124,7 +127,7 @@ public class MeasurementServiceImpl implements MeasurementService {
             float tolerance = valueCalculatedByFraction * TOLERANCE_OF_CONSUMPTION_DEVIATION;
             float maximumConsumptionAllowed = valueCalculatedByFraction + tolerance;
             float minimumConsumptionAllowed = valueCalculatedByFraction - tolerance;
-            if(consumedInMonth < minimumConsumptionAllowed || consumedInMonth > maximumConsumptionAllowed) {
+            if (consumedInMonth < minimumConsumptionAllowed || consumedInMonth > maximumConsumptionAllowed) {
                 return false;
             }
             previousValue = measurement.getValue();

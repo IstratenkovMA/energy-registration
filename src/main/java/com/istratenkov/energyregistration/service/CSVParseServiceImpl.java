@@ -32,6 +32,7 @@ public class CSVParseServiceImpl implements CSVParseService {
 
     /**
      * Parse csv of fraction file. (examples of format can be found in test/resources)
+     *
      * @param file multipart file with data about fractions of profiles.
      * @return Map of profile and it's list parsed fractions.
      * @throws DataFormatException in case of file has incorrect format.
@@ -70,6 +71,7 @@ public class CSVParseServiceImpl implements CSVParseService {
     /**
      * Parse csv file with information about measurements of a given meter.
      * (examples of format can be found in test/resources)
+     *
      * @param file file with information about profile with meterId and it's measurements for 12 months.
      * @return Map of profile and it's list parsed measurements.
      * @throws DataFormatException in case of file has incorrect format.

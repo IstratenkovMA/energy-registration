@@ -34,6 +34,7 @@ public class FractionServiceImpl implements FractionService {
     /**
      * Validation of parsed fractions data from file.
      * Validate sum of 12 month fractions for given profile should be 1.
+     *
      * @param parsedFractions map of parsed profile and list of fractions form csv file to be validated.
      * @return ValidationResultDto with failed and succeeded lists of profiles.
      */
@@ -41,7 +42,7 @@ public class FractionServiceImpl implements FractionService {
         log.trace("[validateParsedFractions] Profiles: {}", parsedFractions.keySet());
         Set<Profile> invalidProfiles = new HashSet<>();
         List<Profile> validProfiles = new ArrayList<>();
-        for (Map.Entry<Profile, List<Fraction>> entry: parsedFractions.entrySet()) {
+        for (Map.Entry<Profile, List<Fraction>> entry : parsedFractions.entrySet()) {
             Profile profile = entry.getKey();
             List<Fraction> fractions = entry.getValue();
             DoubleSummaryStatistics collect = fractions
@@ -49,7 +50,7 @@ public class FractionServiceImpl implements FractionService {
                     .map(Fraction::getValue)
                     .collect(Collectors.summarizingDouble(d -> (double) d));
             double sum = collect.getSum();
-            if(Math.abs(sum - 1.0) > 0.0001) {
+            if (Math.abs(sum - 1.0) > 0.0001) {
                 invalidProfiles.add(profile);
             } else {
                 validProfiles.add(profile);
@@ -64,6 +65,7 @@ public class FractionServiceImpl implements FractionService {
     /**
      * Save information about fractions. Previously try to check
      * if profile for this specific fraction already been presented in db.
+     *
      * @param parsedFractions map of valid and parsed profile vs list of fractions form csv file to be validated.
      */
     @Transactional
@@ -78,7 +80,7 @@ public class FractionServiceImpl implements FractionService {
         Map<String, Profile> nameProfileFromDb = transformListToMapNameProfile(existingProfilesInDB);
         for (Map.Entry<Profile, List<Fraction>> entry : parsedFractions.entrySet()) {
             Profile profile;
-            if(!parsedProfiles.contains(entry.getKey())) {
+            if (!parsedProfiles.contains(entry.getKey())) {
                 profile = nameProfileFromDb.get(entry.getKey().getName());
             } else {
                 profile = entry.getKey();

@@ -29,9 +29,9 @@ public class Profile {
     private Long id;
     private String name;
     private String meterId;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="profile")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "profile")
     private List<Fraction> fractions;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="profile")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "profile")
     private List<MeterMeasurement> measurements;
 
     @Override

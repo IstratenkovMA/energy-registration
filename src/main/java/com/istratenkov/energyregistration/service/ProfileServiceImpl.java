@@ -26,6 +26,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     /**
      * Transactional method. Save all given profiles to database.
+     *
      * @param profiles to be saved.
      */
     @Override
@@ -36,6 +37,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     /**
      * Transactional method. Search profile by it's meterId.
+     *
      * @param meterId meterId of meter for specific profile in db.
      * @return null or founded profile.
      */
@@ -51,6 +53,7 @@ public class ProfileServiceImpl implements ProfileService {
      * up it as a reference for measurements. And enriches profile from db with data parsed meterId
      * and parsed measurements.
      * With other words it merge data from db and parsed data from file.
+     *
      * @param parsedMeasurements Map profile vs it's measurements.
      * @return list of fulfilled profiles with full data that we have in db and from file.
      */
@@ -66,7 +69,7 @@ public class ProfileServiceImpl implements ProfileService {
         for (Map.Entry<Profile, List<MeterMeasurement>> profileMeasurements : parsedMeasurements.entrySet()) {
             Integer yearOfMeasurements = profileMeasurements.getValue().get(0).getYear();
             Profile parsedProfile = profileMeasurements.getKey();
-            if(!namesProfilesFromDB.containsKey(parsedProfile.getName())) {
+            if (!namesProfilesFromDB.containsKey(parsedProfile.getName())) {
                 throw new ProfileDataNotFoundInDBException(parsedProfile.getName());
             }
             Profile profileFromDB = namesProfilesFromDB.get(parsedProfile.getName());

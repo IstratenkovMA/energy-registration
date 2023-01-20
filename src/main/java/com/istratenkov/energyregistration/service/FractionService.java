@@ -9,5 +9,6 @@ import java.util.Map;
 
 public interface FractionService {
     ValidationResultDto validateParsedFractions(Map<Profile, List<Fraction>> parsedFractions);
+
     void saveFractions(Map<Profile, List<Fraction>> parsedFractions);
 }
