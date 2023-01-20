@@ -62,9 +62,16 @@ or host:port/v1/measurements
 
 To achieve better format of loading in my opinion there is two ways:
 * First if the data is received like batch fraction and mesurements at the same 
-  file/request/message we can merge it into one file and verify 
-  and parse fractions within measurements. It will simplify database structure and logic.
-* Second if data is recieved incrementally we can provide endpoint to upload it via rest or via message queue
-and use json format for it. It much easier to work with json rather then excel files. And also we can store
-  messages and implement event sourcing by it. Also if messages or rest requests contain only one profile data
-  per message/request it is easier to work with. 
+  file/request/message we verify 
+  and parse fractions with measurements. It will simplify database structure and logic.
+  All validations in one flow.
+* Second if data is recieved incrementally 
+  (we can provide endpoint to upload it via rest or via message queue)
+  and use json format for it. It much easier to work with json rather then excel files. 
+  And also we can store
+  messages and implement event sourcing by it. 
+  Also if messages or rest requests contain only one profile data
+  per message/request it is easier to work with.
+  
+PS: axon framework was the next step for my application. 
+  However, some coding parts took more time than I expected
