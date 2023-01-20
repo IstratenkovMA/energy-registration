@@ -3,21 +3,17 @@ package com.istratenkov.energyregistration.service;
 import com.istratenkov.energyregistration.model.entity.Fraction;
 import com.istratenkov.energyregistration.model.entity.MeterMeasurement;
 import com.istratenkov.energyregistration.model.entity.Profile;
-import com.istratenkov.energyregistration.model.entity.enumeration.Month;
 import com.istratenkov.energyregistration.utils.TestUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.DataFormatException;
@@ -25,9 +21,9 @@ import java.util.zip.DataFormatException;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class CSVParseServiceTest {
+class CSVParseServiceImplTest {
 
-    CSVParseService csvParseService = new CSVParseService();
+    CSVParseServiceImpl csvParseService = new CSVParseServiceImpl();
 
     @Test
     void parseFractionsFromFile() throws IOException, DataFormatException {
