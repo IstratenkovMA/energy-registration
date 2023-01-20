@@ -1,4 +1,4 @@
-package com.istratenkov.energyregistration.service;
+package com.istratenkov.energyregistration.service.impl;
 
 import com.istratenkov.energyregistration.model.dto.ValidationResultDto;
 import com.istratenkov.energyregistration.model.entity.Fraction;
@@ -7,6 +7,7 @@ import com.istratenkov.energyregistration.model.entity.Profile;
 import com.istratenkov.energyregistration.model.entity.enumeration.Month;
 import com.istratenkov.energyregistration.model.entity.enumeration.MonthConverter;
 import com.istratenkov.energyregistration.repository.MeterMeasurementRepository;
+import com.istratenkov.energyregistration.service.MeasurementService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -5,6 +5,8 @@ import com.istratenkov.energyregistration.model.entity.MeterMeasurement;
 import com.istratenkov.energyregistration.model.entity.Profile;
 import com.istratenkov.energyregistration.model.entity.enumeration.Month;
 import com.istratenkov.energyregistration.repository.MeterMeasurementRepository;
+import com.istratenkov.energyregistration.service.impl.MeasurementServiceImpl;
+import com.istratenkov.energyregistration.service.impl.ProfileServiceImpl;
 import com.istratenkov.energyregistration.utils.TestUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

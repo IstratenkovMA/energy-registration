@@ -3,6 +3,7 @@ package com.istratenkov.energyregistration.service;
 import com.istratenkov.energyregistration.model.entity.Fraction;
 import com.istratenkov.energyregistration.model.entity.MeterMeasurement;
 import com.istratenkov.energyregistration.model.entity.Profile;
+import com.istratenkov.energyregistration.service.impl.CSVParseServiceImpl;
 import com.istratenkov.energyregistration.utils.TestUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

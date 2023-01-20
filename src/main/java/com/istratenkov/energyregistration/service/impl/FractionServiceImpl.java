@@ -1,10 +1,11 @@
-package com.istratenkov.energyregistration.service;
+package com.istratenkov.energyregistration.service.impl;
 
 import com.istratenkov.energyregistration.model.dto.ValidationResultDto;
 import com.istratenkov.energyregistration.model.entity.Fraction;
 import com.istratenkov.energyregistration.model.entity.Profile;
 import com.istratenkov.energyregistration.repository.FractionRepository;
 import com.istratenkov.energyregistration.repository.ProfileRepository;
+import com.istratenkov.energyregistration.service.FractionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

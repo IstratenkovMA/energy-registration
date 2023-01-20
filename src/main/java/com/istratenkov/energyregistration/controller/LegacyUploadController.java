@@ -2,8 +2,7 @@ package com.istratenkov.energyregistration.controller;
 
 import com.istratenkov.energyregistration.model.dto.ValidationResultDto;
 import com.istratenkov.energyregistration.model.entity.Profile;
-import com.istratenkov.energyregistration.service.MeasurementServiceImpl;
-import com.istratenkov.energyregistration.service.UploadServiceImpl;
+import com.istratenkov.energyregistration.service.impl.UploadServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
@@ -11,10 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,7 +31,6 @@ import java.util.zip.DataFormatException;
 @RequiredArgsConstructor
 public class LegacyUploadController {
 
-    private final MeasurementServiceImpl measurementService;
     private final UploadServiceImpl uploadService;
 
     /**
@@ -82,22 +78,6 @@ public class LegacyUploadController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.ok(buildResponseForDataLoading(invalidProfiles));
-    }
-
-    /**
-     * Provides information about consumption of specific meter in specific month and year.
-     *
-     * @param meterId meter id of meter that was sent to the system previously.
-     * @param month   month that consumption is need ot be calculated.
-     * @param year    year that data is needed for.
-     * @return
-     */
-    @Operation(summary = "Get information about consumption of given meter in specified year and month.")
-    @GetMapping("/consumption")
-    public ResponseEntity<Object> getConsumptionForMeter(@RequestParam("meterId") String meterId,
-                                                         @RequestParam("month") String month,
-                                                         @RequestParam("year") Integer year) {
-        return ResponseEntity.ok(measurementService.getConsumptionForMeterByMonth(meterId, month, year));
     }
 
     /**

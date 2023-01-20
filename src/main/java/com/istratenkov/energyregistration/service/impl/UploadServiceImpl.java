@@ -1,10 +1,11 @@
-package com.istratenkov.energyregistration.service;
+package com.istratenkov.energyregistration.service.impl;
 
 import com.istratenkov.energyregistration.exception.ConsumptionCheckSumValidationException;
 import com.istratenkov.energyregistration.model.dto.ValidationResultDto;
 import com.istratenkov.energyregistration.model.entity.Fraction;
 import com.istratenkov.energyregistration.model.entity.MeterMeasurement;
 import com.istratenkov.energyregistration.model.entity.Profile;
+import com.istratenkov.energyregistration.service.UploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

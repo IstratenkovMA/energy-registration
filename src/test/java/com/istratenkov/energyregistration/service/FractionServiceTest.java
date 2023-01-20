@@ -6,6 +6,7 @@ import com.istratenkov.energyregistration.model.entity.Profile;
 import com.istratenkov.energyregistration.model.entity.enumeration.Month;
 import com.istratenkov.energyregistration.repository.FractionRepository;
 import com.istratenkov.energyregistration.repository.ProfileRepository;
+import com.istratenkov.energyregistration.service.impl.FractionServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

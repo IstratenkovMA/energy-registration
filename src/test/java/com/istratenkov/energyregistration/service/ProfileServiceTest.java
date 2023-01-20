@@ -5,6 +5,7 @@ import com.istratenkov.energyregistration.model.entity.MeterMeasurement;
 import com.istratenkov.energyregistration.model.entity.Profile;
 import com.istratenkov.energyregistration.repository.FractionRepository;
 import com.istratenkov.energyregistration.repository.ProfileRepository;
+import com.istratenkov.energyregistration.service.impl.ProfileServiceImpl;
 import com.istratenkov.energyregistration.utils.TestUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
