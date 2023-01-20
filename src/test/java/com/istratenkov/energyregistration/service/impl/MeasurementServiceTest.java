@@ -1,5 +1,6 @@
-package com.istratenkov.energyregistration.service;
+package com.istratenkov.energyregistration.service.impl;
 
+import com.istratenkov.energyregistration.model.dto.EnrichedProfilesDto;
 import com.istratenkov.energyregistration.model.dto.ValidationResultDto;
 import com.istratenkov.energyregistration.model.entity.MeterMeasurement;
 import com.istratenkov.energyregistration.model.entity.Profile;
@@ -47,7 +48,7 @@ class MeasurementServiceTest {
         profile.setId(1L);
         List<Profile> profiles = new ArrayList<>();
         profiles.add(profile);
-        when(profileService.enrichParsedProfile(map)).thenReturn(profiles);
+        when(profileService.enrichParsedProfile(map)).thenReturn(new EnrichedProfilesDto(profiles, new ArrayList<>()));
 
         ValidationResultDto result = measurementService.validateParsedMeasurements(map);
 
@@ -68,7 +69,7 @@ class MeasurementServiceTest {
         profile.setId(1L);
         List<Profile> profiles = new ArrayList<>();
         profiles.add(profile);
-        when(profileService.enrichParsedProfile(map)).thenReturn(profiles);
+        when(profileService.enrichParsedProfile(map)).thenReturn(new EnrichedProfilesDto(profiles, new ArrayList<>()));
 
         ValidationResultDto result = measurementService.validateParsedMeasurements(map);
 
@@ -89,7 +90,7 @@ class MeasurementServiceTest {
         profile.setId(1L);
         List<Profile> profiles = new ArrayList<>();
         profiles.add(profile);
-        when(profileService.enrichParsedProfile(map)).thenReturn(profiles);
+        when(profileService.enrichParsedProfile(map)).thenReturn(new EnrichedProfilesDto(profiles, new ArrayList<>()));
 
         ValidationResultDto result = measurementService.validateParsedMeasurements(map);
 
@@ -110,7 +111,7 @@ class MeasurementServiceTest {
         profile.setId(1L);
         List<Profile> profiles = new ArrayList<>();
         profiles.add(profile);
-        when(profileService.enrichParsedProfile(map)).thenReturn(profiles);
+        when(profileService.enrichParsedProfile(map)).thenReturn(new EnrichedProfilesDto(profiles, new ArrayList<>()));
 
         ValidationResultDto result = measurementService.validateParsedMeasurements(map);
 

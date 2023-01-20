@@ -61,8 +61,9 @@ or host:port/v1/measurements
 ##Further improvements
 
 To achieve better format of loading in my opinion there is two ways:
-* First if the data is received like a batch we can merge it into one file and verify
-and parse fractions within measurements. It will simplify database structure and logic.
+* First if the data is received like batch fraction and mesurements at the same 
+  file/request/message we can merge it into one file and verify 
+  and parse fractions within measurements. It will simplify database structure and logic.
 * Second if data is recieved incrementally we can provide endpoint to upload it via rest or via message queue
 and use json format for it. It much easier to work with json rather then excel files. And also we can store
   messages and implement event sourcing by it. Also if messages or rest requests contain only one profile data

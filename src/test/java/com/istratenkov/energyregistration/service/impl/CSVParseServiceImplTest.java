@@ -1,4 +1,4 @@
-package com.istratenkov.energyregistration.service;
+package com.istratenkov.energyregistration.service.impl;
 
 import com.istratenkov.energyregistration.model.entity.Fraction;
 import com.istratenkov.energyregistration.model.entity.MeterMeasurement;

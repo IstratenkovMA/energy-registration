@@ -1,4 +1,4 @@
-package com.istratenkov.energyregistration.service;
+package com.istratenkov.energyregistration.service.impl;
 
 import com.istratenkov.energyregistration.model.dto.ValidationResultDto;
 import com.istratenkov.energyregistration.model.entity.Fraction;
@@ -6,6 +6,7 @@ import com.istratenkov.energyregistration.model.entity.Profile;
 import com.istratenkov.energyregistration.model.entity.enumeration.Month;
 import com.istratenkov.energyregistration.repository.FractionRepository;
 import com.istratenkov.energyregistration.repository.ProfileRepository;
+import com.istratenkov.energyregistration.service.FractionService;
 import com.istratenkov.energyregistration.service.impl.FractionServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyCollection;
@@ -75,11 +77,12 @@ class FractionServiceTest {
         ArgumentCaptor<Set<Profile>> profilesCaptor = ArgumentCaptor.forClass(Set.class);
         when(profileRepository.saveAll(profilesCaptor.capture())).thenReturn(List.of(new Profile()));
 
-        fractionService.saveFractionsWithProfile(generateValidTestData());
+        List<Profile> testDataForProfileList = getValidTestDataAsList();
+        fractionService.saveFractionsWithProfile(testDataForProfileList);
 
         verify(profileRepository).findAllByNameIn(anyList());
         verify(profileRepository).saveAll(anySet());
-        assertEquals(2, profilesCaptor.getValue().size());
+        assertEquals(3, profilesCaptor.getValue().size());
         verify(fractionRepository).saveAll(anyList());
         assertEquals(36, fractionsCaptor.getValue().size());
     }
@@ -92,7 +95,8 @@ class FractionServiceTest {
         ArgumentCaptor<Set<Profile>> profilesCaptor = ArgumentCaptor.forClass(Set.class);
         when(profileRepository.saveAll(profilesCaptor.capture())).thenReturn(List.of(new Profile()));
 
-        fractionService.saveFractionsWithProfile(generateValidTestData());
+        List<Profile> testDataForProfileList = getValidTestDataAsList();
+        fractionService.saveFractionsWithProfile(testDataForProfileList);
 
         verify(profileRepository).findAllByNameIn(anyList());
         verify(profileRepository).saveAll(anySet());
@@ -155,6 +159,13 @@ class FractionServiceTest {
         testData.put(profile1, validFractions1);
         testData.put(profile2, validFractions2);
         return testData;
+    }
+
+    private List<Profile> getValidTestDataAsList() {
+        return generateValidTestData().entrySet()
+                .stream()
+                .peek(e -> e.getKey().setFractions(e.getValue()))
+                .map(e -> e.getKey()).collect(Collectors.toList());
     }
 
     private Map<Profile, List<Fraction>> generateInvalidTestData() {
